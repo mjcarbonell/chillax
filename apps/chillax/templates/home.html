@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <base href="[[=URL('static')]]/">
+    <link rel="shortcut icon" href="favicon.ico">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chillax</title>
+    <!-- Bootstrap 4 files -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- fontawsome 4 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/styles.css?v=1.2"/>
+    
+  </head>
+  <div class="section" id="vue-target" v-cloak>
+    
+    <body class="timeline">
+      <!-- navbar -->
+      <div class="navbar row">
+      <div class="col-4 left">
+        <img src="images/meowLogo-removebg-preview.png" style="width: 50px; height: 50px;" />
+      </div>
+      <div class="col-4 middle">
+          <input type="text" placeholder="search"/>
+      </div>
+      <div class="col-4 right">
+          <img src="https://img.icons8.com/fluent-systems-filled/48/000000/home.png"/>
+          <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+          <i class="fa fa-compass" aria-hidden="true"></i>
+          <i class="fa fa-heart-o" aria-hidden="true"></i>
+          <div class="profile-sec"></div>
+      </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-8">
+            <!-- status box -->
+            <div class="status-box">
+              <div class="status-sec">
+                <div class="status">
+                  <img src="images/renaissance.jpg" class="profile-pic"/>
+                </div>
+                Renaissance
+              </div>
+
+              <!-- status box -->
+              <div class="status-sec">
+                <div class="status">
+                  <img src="images/neo-expression.png" class="profile-pic"/>
+                </div>
+                Neo-expressionism
+              </div>
+
+              <!-- status box -->
+              <div class="status-sec">
+                <div class="status">
+                  <img src="images/romanticism.png" class="profile-pic"/>
+                </div>
+                Romanticism
+              </div>
+
+              <!-- status box -->
+              <div class="status-sec">
+                <div class="status">
+                  <img src="images/impressionism.png" class="profile-pic" />
+                </div>
+                Impressionism
+              </div>
+
+              <!-- status box -->
+              <div class="status-sec">
+                <div class="status">
+                  <img src="images/futurism.png" class="profile-pic"/>
+                </div>
+                Futurism
+              </div>
+            </div>
+
+            <!-- post feed-->
+            <div class="post" v-for="m in posts">
+              <div class="post-head">
+                <div class="profile-pic">
+                  <img src="https://picsum.photos/200" />
+                </div>
+                <div class="user-info" style="flex-grow: 1;">
+                  <p style="margin: 0;">Original prompt: "{{m.prompt}}"</p>
+                  <h1 style="margin: 0;">The artwork of a mystery</h1>
+                </div>
+              </div>
+              <div class="post-body"><img src="https://picsum.photos/200" /></div>
+              <div class="post-info">
+                <p class="icons">
+                  <i class="fa fa-heart-o" aria-hidden="true"></i>
+                  <i class="fa fa-comment-o" aria-hidden="true"></i>
+                  <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+                  <i class="fa fa-bookmark-o float-right" aria-hidden="true"></i>
+                </p>
+                <p class="likes">35 likes</p>
+                <p class="timestamp">2 Hours</p>
+                <p class="add-comments">
+                  <i class="fa fa-smile-o" aria-hidden="true"></i>
+                  <input type="text" placeholder="Add comment"/>
+                </p>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="col-4">
+
+            <div class="post">
+              <div class="avatar" style="display: flex; align-items: center;">
+                <img src="images/meowLogo-removebg-preview.png" class="profile-pic" style="margin-right: 10px;" />
+                <p>Share your musings and behold their transformation.</p>
+              </div>
+              
+              <div class="textbox">
+                <input class="input" type="text" v-model="prompt" /> 
+                <i class="fa fa-picture-o" aria-hidden="true"></i>
+                <button class="button is-link" @click="submit_post">Reveal the transformation</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </body>
+  </div>
+</html>
+
+
+[[block page_scripts]]
+<!-- Loads the index-specific js for Vue -->
+<script src="js/sugar.min.js"></script>
+<script src="js/axios.min.js"></script>
+<script src="js/vue.js"></script>
+<script src="js/utils.js"></script>
+<script>
+  let post_url = "[[=XML(post_url)]]"
+  let get_posts_url = "[[=XML(get_posts_url)]]"
+</script>
+<script src="js/home.js"></script>
+[[end]]
