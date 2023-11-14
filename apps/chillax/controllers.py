@@ -26,6 +26,8 @@ Warning: Fixtures MUST be declared with @action.uses({fixtures}) else your app w
 """
 ## NOW 
 import openai
+import os 
+from dotenv import load_dotenv
 import requests
 import datetime
 import random
@@ -35,7 +37,9 @@ from .common import db, session, T, cache, auth, logger, authenticated, unauthen
 from py4web.utils.url_signer import URLSigner
 from .models import get_username, get_user_email
 
-openai.api_key = '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'
+load_dotenv()
+
+openai.api_key = os.getenv('API_KEY')
 def get_fancy_version(input_text):
     try:
         # Call the OpenAI API with the input text
