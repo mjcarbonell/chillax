@@ -24,7 +24,9 @@ The path follows the bottlepy syntax.
 session, db, T, auth, and tempates are examples of Fixtures.
 Warning: Fixtures MUST be declared with @action.uses({fixtures}) else your app will result in undefined behavior
 """
-
+## NOW 
+import openai
+import requests
 import datetime
 import random
 from py4web import action, request, abort, redirect, URL
@@ -32,6 +34,35 @@ from yatl.helpers import A
 from .common import db, session, T, cache, auth, logger, authenticated, unauthenticated, flash
 from py4web.utils.url_signer import URLSigner
 from .models import get_username, get_user_email
+
+openai.api_key = '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'
+def get_fancy_version(input_text):
+    try:
+        # Call the OpenAI API with the input text
+        response = openai.Completion.create(
+          engine="text-davinci-003", # or "text-davinci-004" for GPT-4, if you have access
+          prompt=f"Translate the following sentences into a more sophisticated and elaborate title for an art piece: '{input_text}'",
+          temperature=0.7,
+          max_tokens=60
+        )
+        return response.choices[0].text.strip()
+    except openai.error.OpenAIError as e:
+        return str(e)
+
+def generate_image(fancy_text):
+    try:
+        # Hypothetical function call - you'll need to replace this with the actual API call
+        response = openai.Image.create(
+            prompt=fancy_text,
+            n=1,  # Generate one image
+            size="1024x1024"  # The size of the image
+        )
+        # The response would need to include a URL or binary data of the generated image
+        image_url = response.data['image_url']  # This is a placeholder
+        return image_url
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return None
 
 url_signer = URLSigner(session)
 
@@ -110,9 +141,27 @@ def add_meow():
 @action.uses(db, url_signer.verify())
 def submit_post():
     prompt = request.json.get('prompt')
-    
+    # So we get a post and we manipulate it.
+    fancy_version = get_fancy_version(prompt)
+    print("FANCY PROMPT")
+    print(fancy_version)
+    fancy_version_prompt = fancy_version + "(do this in a renaissance artistic stlye)"
+    response = openai.Image.create(prompt=fancy_version_prompt, n=1, size="256x256")
+
+    print("RESPONSE")
+    print(response)
+    print(type(response))
+    image_url = None
+    # for index, i in enumerate(response["data"]): 
+    #     print("Index: {}".format(index))
+    #     print(i["url"])
+    #     image_url = i["url"]
+    if(response["data"][0]["url"]):
+        image_url = response["data"][0]["url"]
     db.posts.insert(
         prompt = prompt,
+        new_prompt = fancy_version, 
+        image_url = image_url, 
     )
     return dict(message="added post successfully", prompt=prompt)
 

@@ -43,7 +43,9 @@ db.define_table(
 
 db.define_table(
     'posts',
-    Field('prompt')
+    Field('prompt'),
+    Field('new_prompt'), 
+    Field('image_url'), # THis should be a URL to an image 
 )
 db.commit()
 

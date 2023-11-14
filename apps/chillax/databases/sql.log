@@ -62,3 +62,40 @@ success!
 success!
 success!
 success!
+success!
+success!
+timestamp: 2023-11-12T19:28:00.732633
+ALTER TABLE "posts" ADD "new_prompt" CHAR(512);
+timestamp: 2023-11-12T19:28:00.740462
+ALTER TABLE "posts" ADD "transform" CHAR(512);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+timestamp: 2023-11-13T21:29:17.613710
+ALTER TABLE "posts" ADD "image_url" CHAR(512);
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!
+success!

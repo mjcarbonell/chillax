@@ -81,23 +81,24 @@
             </div>
 
             <!-- post feed-->
-            <div class="post" v-for="m in posts">
+            <div class="post" v-for="m in posts.slice().reverse()">
               <div class="post-head">
                 <div class="profile-pic">
                   <img src="https://picsum.photos/200" />
                 </div>
-                <div class="user-info" style="flex-grow: 1;">
-                  <p style="margin: 0;">Original prompt: "{{m.prompt}}"</p>
-                  <h1 style="margin: 0;">The artwork of a mystery</h1>
+                <div class="user-info">
+                   <p>from: "{{m.prompt}}"</p>
+                   <p style="margin: 0; font-weight: bold;">"{{ m.new_prompt }}"</p>
                 </div>
               </div>
-              <div class="post-body"><img src="https://picsum.photos/200" /></div>
+              <div class="post-body"><img v-bind:src="m.image_url" /></div>
               <div class="post-info">
                 <p class="icons">
                   <i class="fa fa-heart-o" aria-hidden="true"></i>
                   <i class="fa fa-comment-o" aria-hidden="true"></i>
                   <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
                   <i class="fa fa-bookmark-o float-right" aria-hidden="true"></i>
+                  <p>{{m.image_url}}</p>
                 </p>
                 <p class="likes">35 likes</p>
                 <p class="timestamp">2 Hours</p>

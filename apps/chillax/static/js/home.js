@@ -38,6 +38,12 @@ let init = (app) => {
                 });
                 app.enumerate(app.vue.posts);
                 Vue.set(app.vue, 'prompt', ''); // Set app.vue.content to an empty string
+                // Get a GET request to get the NEW PROMPT 
+                axios.get(get_posts_url).then(function (response){
+                    app.vue.posts = app.enumerate(response.data.posts);
+                    console.log("We just got the new_prompt"); 
+                    console.log(app.vue.posts); 
+                })
         })
     };
 
