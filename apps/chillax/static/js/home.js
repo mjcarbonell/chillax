@@ -11,6 +11,7 @@ let init = (app) => {
         // Complete as you see fit.
         posts: [],
         prompt: "",
+        loading: false, 
         
     };    
     
@@ -26,6 +27,8 @@ let init = (app) => {
     };
     
     app.submit_post = function () {
+        Vue.set(app.vue, 'loading', true); 
+        console.log(app.vue.loading); 
         console.log("this is prompt: ");
         console.log(app.vue.prompt); 
         axios.post(post_url,
@@ -43,6 +46,8 @@ let init = (app) => {
                     app.vue.posts = app.enumerate(response.data.posts);
                     console.log("We just got the new_prompt"); 
                     console.log(app.vue.posts); 
+                    Vue.set(app.vue, 'loading', false); 
+                    console.log(app.vue.loading); 
                 })
         })
     };
@@ -65,13 +70,16 @@ let init = (app) => {
     app.init = () => {
         // Put here any initialization code.
         // Grabbing posts 
+        Vue.set(app.vue, 'loading', false); 
         axios.get(get_posts_url).then(function (response){
             app.vue.posts = app.enumerate(response.data.posts);
             console.log("Done"); 
             console.log(app.vue.posts); 
+            // for (let i = 0; i < app.vue.posts.length; i++) {
+            //     console.log(app.vue.posts[i].image_data); // Print each post
+            // }
         })
         
-
     };
 
     // Call to the initializer.

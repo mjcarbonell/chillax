@@ -225,10 +225,17 @@ footer a:hover {
 }
 
 .timeline .post {
-  height: auto;
+  /* height: auto;
   border: 1px solid #dadada;
   margin: 50px 0;
-  overflow: hidden;
+  overflow: hidden; */
+
+  border: 1px solid #dadada;
+  width: 100%;       /* Set the width to half of its parent container */
+  max-height: 100%;  /* Set the max-height to half of the image's original height */
+  /*display: block;   /* Display block to remove bottom space under the image */ 
+  margin: auto;     /* Center the image horizontally */
+  overflow: hidden; 
 }
 
 .timeline .post .post-head {
@@ -252,7 +259,7 @@ footer a:hover {
 }
 
 .timeline .post .post-head .profile-pic img {
-  width: 50px;
+  max-width: 100%;
 }
 
 .timeline .post .post-head .username {
@@ -264,7 +271,10 @@ footer a:hover {
 }
 
 .timeline .post .post-body img {
-  width: 100%;
+  width: 100%;       /* Set the width to half of its parent container */
+  height: auto;  /* Set the max-height to half of the image's original height */
+  display: block;   /* Display block to remove bottom space under the image */
+  margin: auto;     /* Center the image horizontally */
 }
 
 .timeline .post .post-info {

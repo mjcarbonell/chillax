@@ -27,8 +27,10 @@ Warning: Fixtures MUST be declared with @action.uses({fixtures}) else your app w
 ## NOW 
 import openai
 import os 
+import base64
 from dotenv import load_dotenv
 import requests
+from io import BytesIO
 import datetime
 import random
 from py4web import action, request, abort, redirect, URL
@@ -70,23 +72,23 @@ def generate_image(fancy_text):
 
 url_signer = URLSigner(session)
 
-@action('index')
-@action.uses('index.html', db, url_signer)
-def index():
-    # return list of people the current user follows 
-    print("after index") 
-    print("signer: {}".format(url_signer))
-    return dict(
-        # COMPLETE: return here any signed URLs you need.
-        signer=url_signer,
-        current=get_user_email(),
-        get_users_url = URL('get_users', signer=url_signer),
-        follow_url=URL('set_follow', signer=url_signer),
-        unfollow_url=URL('set_unfollow', signer=url_signer),
-        meow_url=URL('add_meow', signer=url_signer),
-    )
+# @action('index')
+# @action.uses('index.html', db, url_signer)
+# def index():
+#     # return list of people the current user follows 
+#     print("after index") 
+#     print("signer: {}".format(url_signer))
+#     return dict(
+#         # COMPLETE: return here any signed URLs you need.
+#         signer=url_signer,
+#         current=get_user_email(),
+#         get_users_url = URL('get_users', signer=url_signer),
+#         follow_url=URL('set_follow', signer=url_signer),
+#         unfollow_url=URL('set_unfollow', signer=url_signer),
+#         meow_url=URL('add_meow', signer=url_signer),
+    # )
 
-@action('home')
+@action('index')
 @action.uses('home.html', db, url_signer)
 def home():
     print("in home")
@@ -156,16 +158,24 @@ def submit_post():
     print(response)
     print(type(response))
     image_url = None
+    image_data = None
+    image_data_base64 = None 
     # for index, i in enumerate(response["data"]): 
     #     print("Index: {}".format(index))
     #     print(i["url"])
     #     image_url = i["url"]
     if(response["data"][0]["url"]):
         image_url = response["data"][0]["url"]
+    # Download the image
+    response = requests.get(image_url)
+    if response.status_code == 200:
+        image_data = response.content
+        image_data_base64 = base64.b64encode(image_data).decode('utf-8')
     db.posts.insert(
         prompt = prompt,
         new_prompt = fancy_version, 
         image_url = image_url, 
+        image_data = image_data_base64,  # If you're storing the image data
     )
     return dict(message="added post successfully", prompt=prompt)
 
